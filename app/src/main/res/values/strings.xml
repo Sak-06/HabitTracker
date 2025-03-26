@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Habit Tracker</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_form">FormActivity</string>
+    <string name="title_activity_habit">HabitActivity</string>
+    <string name="title_activity_custom_habit">CustomHabitActivity</string>
+</resources>

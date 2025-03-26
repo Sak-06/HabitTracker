@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "361879960746",
+    "project_id": "sakshi-habit-tracker",
+    "storage_bucket": "sakshi-habit-tracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361879960746:android:0f5949e99b0b120fabe4d3",
+        "android_client_info": {
+          "package_name": "com.example.habittracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaVreLHgcgM66uSTPFHD0XgtNSybcxWEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
