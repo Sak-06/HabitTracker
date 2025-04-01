@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -53,6 +54,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,11 +81,11 @@ class CustomHabitActivity : ComponentActivity() {
     }
 }
 @Composable
-fun IconGrid(onIconSelected: (ImageVector) -> Unit, onDismiss: ()-> Unit){
+fun IconGrid(onIconSelected: (ImageVector) -> Unit){
     val icons = listOf(Icons.Default.Call, Icons.Default.AccountBox , Icons.Default.Build , Icons.Default.Person)
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
+        modifier = Modifier.wrapContentSize().padding(16.dp)
     ) {
         items(icons.size){index ->
             Icon(
@@ -92,17 +94,18 @@ fun IconGrid(onIconSelected: (ImageVector) -> Unit, onDismiss: ()-> Unit){
                 modifier = Modifier
                     .size(60.dp)
                     .padding(8.dp)
-                   .clickable { onIconSelected(icons[index]) }
+                   .clickable { onIconSelected(icons[index])
+                   }
             )
         }
     }
 }
 @Composable
-fun ColorGrid(onColorSelected: (Color) -> Unit, onDismiss: ()-> Unit){
-    val colors = listOf(Color(0xFFFFFFFF),Color(0xFFFFFFFF),Color(0xFFFFFFFF),Color(0xFFFFFFFF),Color(0xFFFFFFFF))
+fun ColorGrid(onColorSelected: (Color) -> Unit){
+    val colors = listOf(Color(0xFFDE29FD),Color(0xFFFD497C),Color(0xFFFF8484),Color(0xFF7BFF44),Color(0xFF7BFF40))
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
+        modifier = Modifier.wrapContentSize().padding(16.dp)
     ) {
         items(colors.size){index ->
             Box(modifier = Modifier.background( color= colors[index], shape = RectangleShape)
@@ -144,7 +147,7 @@ fun CustomHabit(context: Context) {
 
             Box(modifier = Modifier
                 .size(width = 180.dp, height = 150.dp)
-                .clickable { showIconPicker = true } // Toggle expansion
+                .clickable { showIconPicker = !showIconPicker } // Toggle expansion
                 .padding(16.dp)
                 .border(1.dp, color = Color(0xFFB4B4B4), shape = RectangleShape)
             ) {
@@ -169,15 +172,33 @@ fun CustomHabit(context: Context) {
 
             }
             if (showIconPicker) {
-                IconGrid(
-                    onIconSelected = { selectedIcon = it },
-                    onDismiss = { showIconPicker = false }
+                AlertDialog(
+                    onDismissRequest = { showIconPicker = false },
+                    title = { Text("Choose an Icon", fontSize = 18.sp, fontWeight = FontWeight.Bold) },
+                    text = {
+                        IconGrid(
+                            onIconSelected = {
+                                selectedIcon = it
+                                showIconPicker = false  // Close dialog after selection
+                            }
+                        )
+                    },
+                    confirmButton = {
+                        Text(
+                            text = "Close",
+                            modifier = Modifier
+                                .clickable { showIconPicker = false }
+                                .padding(10.dp),
+                            fontSize = 16.sp,
+                            color = Color.Blue
+                        )
+                    }
                 )
             }
 
             Box(modifier = Modifier
                 .size(width = 180.dp, height = 150.dp)
-                .clickable { showColorPicker = true } // Toggle expansion
+                .clickable { showColorPicker = !showColorPicker } // Toggle expansion
                 .padding(16.dp)
                 .border(1.dp, color = Color.LightGray, shape = RectangleShape)
             ) {
@@ -202,9 +223,27 @@ fun CustomHabit(context: Context) {
                 }
             }
             if (showColorPicker) {
-                ColorGrid(
-                    onColorSelected = { selectedColor = it },
-                    onDismiss = { showColorPicker = false }
+                AlertDialog(
+                    onDismissRequest = { showColorPicker = false },
+                    title = { Text("Choose an Icon", fontSize = 18.sp, fontWeight = FontWeight.Bold) },
+                    text = {
+                        ColorGrid(
+                            onColorSelected = {
+                                selectedColor = it
+                                showColorPicker = false  // Close dialog after selection
+                            }
+                        )
+                    },
+                    confirmButton = {
+                        Text(
+                            text = "Close",
+                            modifier = Modifier
+                                .clickable { showColorPicker = false }
+                                .padding(10.dp),
+                            fontSize = 16.sp,
+                            color = Color.Blue
+                        )
+                    }
                 )
             }
 
@@ -244,7 +283,7 @@ fun CustomHabit(context: Context) {
             }
             Box(
                 modifier = Modifier.size(width = 180.dp, height = 150.dp)
-                    .border(1.dp, Color.LightGray, RectangleShape)
+                    .border(1.dp, Color.White, RectangleShape)
                     .clickable { quit = true } // Toggle expansion
                     .padding(16.dp)
                     .background(color = Color(0xFF57B0FF))

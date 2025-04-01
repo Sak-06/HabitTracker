@@ -53,7 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.habittracker.ui.theme.HabitTrackerTheme
-
+import com.google.firebase.auth.FirebaseAuth
 
 
 class FormActivity : ComponentActivity() {
@@ -76,6 +76,7 @@ class FormActivity : ComponentActivity() {
 @SuppressLint("InvalidColorHexValue")
 @Composable
 fun Formreg(context: Context){
+    val user = FirebaseAuth.getInstance().currentUser
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,7 +87,7 @@ fun Formreg(context: Context){
             modifier = Modifier.size(width = 450.dp, height = 300.dp).padding(start = 0.dp,top=0.dp,end=0.dp,bottom=70.dp),
             contentDescription = null
         )
-        var name by remember { mutableStateOf("") }
+        var name by remember { mutableStateOf(user?.displayName ?: "") }
         var age by remember { mutableStateOf("") }
         var gender by remember { mutableStateOf("") }
         var selectedCounty by remember { mutableStateOf("Select Country") }
@@ -204,7 +205,7 @@ fun Formreg(context: Context){
             }
         }
        Button(
-           onClick = {val intent = Intent(context, MainActivity::class.java)
+           onClick = {val intent = Intent(context, HomeActivity::class.java)
                context.startActivity(intent)},
            enabled = isValid,
            modifier = Modifier.size(width = 140.dp, height = 60.dp).fillMaxWidth().padding(bottom = 15.dp),
@@ -223,7 +224,7 @@ fun Formreg(context: Context){
            }
        }
         Button(
-            onClick = {val intent = Intent(context, MainActivity::class.java)
+            onClick = {val intent = Intent(context, HomeActivity::class.java)
                 context.startActivity(intent)},
             enabled = true,
             modifier = Modifier.size(width = 140.dp, height = 60.dp).fillMaxWidth().padding(bottom = 15.dp),

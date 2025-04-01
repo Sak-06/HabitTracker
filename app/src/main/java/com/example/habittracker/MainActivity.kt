@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -101,7 +104,7 @@ fun HomePage(context: Context) {
         )
         val calendar = Calendar.getInstance()
         val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
+        var showdialogue by remember { mutableStateOf(false) }
         var selectedDate by remember { mutableStateOf("Date") } // Default text
 
         val datePicker = DatePickerDialog(
@@ -144,14 +147,39 @@ fun HomePage(context: Context) {
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp
         )
-        IconButton(onClick = { val intent = Intent(context,HabitActivity::class.java)
-        context.startActivity(intent)}) {
+        IconButton(onClick = { showdialogue=true}) {
             Icon(
                 painter = painterResource(R.drawable.add_icon),
                 contentDescription = null,
                 modifier = Modifier.size(40.dp),
                 tint = Color(0xFF5CB5D0)
             )
+            if(showdialogue){
+                AlertDialog(
+                    onDismissRequest = {showdialogue=false},
+                    confirmButton = {Text(
+                        text = "Habit",
+                        modifier = Modifier
+                            .clickable { val intent = Intent(context,HabitActivity::class.java)
+                                context.startActivity(intent)}
+                            .padding(10.dp),
+                        fontSize = 16.sp,
+                        color = Color.Blue
+                    )},
+                    dismissButton = {
+                        Text(
+                            text = "Task",
+                            modifier = Modifier
+                                .clickable { val intent = Intent(context,HabitActivity::class.java)
+                                    context.startActivity(intent)}
+                                .padding(10.dp),
+                            fontSize = 16.sp,
+                            color = Color.Blue
+                        )
+                    },
+                    shape = AlertDialogDefaults.shape
+                )
+            }
         }
         Row(
             verticalAlignment = Alignment.Bottom ,
@@ -178,12 +206,15 @@ fun HomePage(context: Context) {
                 contentDescription = null,
                 modifier = Modifier.size(40.dp)
             )
-            Icon(
-                painter = painterResource(R.drawable.add_icon),
-                contentDescription = null,
-                modifier = Modifier.size(40.dp),
-                tint = Color(0xFF5CB5D0)
-            )
+            IconButton(onClick = { val intent = Intent(context,HabitActivity::class.java)
+                context.startActivity(intent)}) {
+                Icon(
+                    painter = painterResource(R.drawable.add_icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(40.dp),
+                    tint = Color(0xFF5CB5D0)
+                )
+            }
         }
 
     }

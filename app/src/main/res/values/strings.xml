@@ -4,4 +4,6 @@
     <string name="title_activity_form">FormActivity</string>
     <string name="title_activity_habit">HabitActivity</string>
     <string name="title_activity_custom_habit">CustomHabitActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="web_client_id">361879960746-0vpasb7tsslcg01isst0l1osecgest79.apps.googleusercontent.com</string>
 </resources>
